@@ -1,33 +1,23 @@
 <template>
   <footer
-    class="static bottom-0 w-full bg-violet-700 mt-12 pb-5 fixed bottom-0"
+    class="p-4 bg-white shadow md:flex md:items-center md:justify-between md:p-6 dark:bg-violet-500 mt-60"
   >
-    <div class="container mx-auto px-4">
-      <hr class="mb-6 border-b-1 border-gray-700" />
-      <div
-        class="flex flex-wrap items-center md:justify-between justify-center"
-      >
-        <div class="w-full md:w-4/12 px-4">
-          <div class="text-sm text-white font-semibold py-1">
-            ©
-            <a class="text-white hover:text-gray-400 text-sm font-semibold py-1"
-              >Random Excuse Generator</a
-            >
-          </div>
-        </div>
-        <div class="w-full md:w-8/12 px-4">
-          <ul class="flex flex-wrap list-none md:justify-end justify-center">
-            <a
-              class="text-white hover:text-gray-400 text-sm font-semibold block py-1 px-3"
-              ><p>Made with ❤️ by Alejo and ChatGPT</p>
-              <p>About</p>
-              <p class="fab fa-github"></p
-            ></a>
-          </ul>
-        </div>
-      </div>
-    </div>
+    <span class="text-sm sm:text-center">© Random Excuse Generator </span>
+    <ul class="flex flex-wrap items-center mt-3 text-sm text-white sm:mt-0">
+      <li>
+        <a href="#" class="mr-4 hover:underline md:mr-6"
+          >Made with ❤️ by Alejo and ChatGPT</a
+        >
+      </li>
+      <li>
+        <a href="#" class="mr-4 hover:underline md:mr-6">About</a>
+      </li>
+      <li>
+        <a href="#" class="mr-4 hover:underline md:mr-6 fab fa-github"></a>
+      </li>
+    </ul>
   </footer>
+  
 </template>
 
 <script></script>
