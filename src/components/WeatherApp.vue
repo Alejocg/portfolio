@@ -15,6 +15,7 @@
         </div>
       </div>
     </div>
+    <div v-if="error">{{ error }}</div>
     <div v-if="weatherData" class="weather-info bg-blue-800 shadow-lg hover:shadow-xl rounded-lg p-6 w-80 transform hover:scale-105 transition duration-300 ease-in-out">
       <h2 class="text-2xl font-bold mb-4">{{ weatherData.name }}</h2>
       <div class="flex items-center mb-4">
@@ -44,25 +45,31 @@ export default {
       location: "",
       weatherData: null,
       isCelsius: true,
+      error: null,
     };
   },
   methods: {
     async getWeather() {
       this.weatherData = null; // set weatherData to null before making API call
-      
-      const response = await fetch(
-        `https://api.openweathermap.org/data/2.5/weather?${
-          this.location ? `q=${this.location}` : ""
-        }${
-          this.location && "geolocation" in navigator ? "&" : ""
-        }${
-          "geolocation" in navigator ? "lat=" + this.latitude + "&lon=" + this.longitude : ""
-        }&appid=60015bca9662a2ab816cbdd318050800&units=${
-          this.isCelsius ? "metric" : "imperial"
-        }`
-      );
-      const data = await response.json();
-      this.weatherData = data;
+      this.error = null; // reset error state before making API call
+
+      try {
+        const response = await fetch(
+          `https://api.openweathermap.org/data/2.5/weather?${
+            this.location ? `q=${this.location}` : ""
+          }${
+            this.location && "geolocation" in navigator ? "&" : ""
+          }${
+            "geolocation" in navigator ? "lat=" + this.latitude + "&lon=" + this.longitude : ""
+          }&appid=60015bca9662a2ab816cbdd318050800&units=${
+            this.isCelsius ? "metric" : "imperial"
+          }`
+        );
+        const data = await response.json();
+        this.weatherData = data;
+      } catch (error) {
+        this.error = "An error occurred while fetching the weather data. Please try again later.";
+      }
     },
     getTemperature() {
       if (this.isCelsius) {
@@ -112,6 +119,8 @@ export default {
   },
 };
 </script>
+
+
 
 
 <style>
