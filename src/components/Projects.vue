@@ -46,8 +46,8 @@ export default {
           title: "Gym Bros",
           description:
             "Gym tracker / Calendar for a group a friends. Using Tailwind, vue and Supabase",
-          githubLink: "https://github.com/Alejocg/weather",
-          webLink: "https://github.com/alejocg/thegymbros",
+          githubLink: "https://github.com/alejocg/thegymbros",
+          webLink: "https://thegymbros.netlify.app/",
         },
         {
           title: "Football Calendar",
