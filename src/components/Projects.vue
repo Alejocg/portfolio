@@ -34,12 +34,20 @@ export default {
   data() {
     return {
       projects: [
+
         {
           title: "Is it cold now?",
           description:
-            "This is a weather app that tells you if it's cold outside based on your current location.",
+            "This is a weather app that tells you if it's cold outside based on your current location",
           githubLink: "https://github.com/Alejocg/weather",
           webLink: "https://isitcoldnow.netlify.app/",
+        },
+                        {
+          title: "Gym Bros",
+          description:
+            "Gym tracker / Calendar for a group a friends. Using Tailwind, vue and Supabase",
+          githubLink: "https://github.com/Alejocg/weather",
+          webLink: "https://github.com/alejocg/thegymbros",
         },
         {
           title: "Football Calendar",
