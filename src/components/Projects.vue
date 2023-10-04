@@ -34,7 +34,13 @@ export default {
   data() {
     return {
       projects: [
-
+      {
+          title: "Agile Vote",
+          description:
+            "Real-time, collaborative Scrum poker estimation app",
+          githubLink: "https://github.com/Alejocg/",
+          webLink: "https://agilevote.netlify.app",
+        },
         {
           title: "Is it cold now?",
           description:
@@ -70,13 +76,7 @@ export default {
           githubLink: "https://github.com/Alejocg",
           webLink: "https://doitfy.netlify.app/",
         },
-        {
-          title: "VIP Conctacts Info",
-          description:
-            "Simple contact management app using Vue.js.",
-          githubLink: "https://github.com/Alejocg/Ironcontacts",
-          webLink: "https://vipagendacontact.netlify.app",
-        },
+   
       ],
     };
   },
