@@ -1,10 +1,10 @@
 <template>
-  <footer class="bg-blue-950">
+  <footer class="bg-orange-300">
     <div
       class="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8 flex justify-between items-center"
     >
       <div>
-        <p class="text-white text-sm">
+        <p class="text-gray-700 font-semibold text-sm">
           Made by Alejo with <i class="fas fa-heart text-red-500"></i>
         </p>
       </div>

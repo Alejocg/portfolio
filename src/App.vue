@@ -1,10 +1,11 @@
 <template>
-  <div class="bg-indigo-900 text-white min-h-screen">
+  <div class="bg-orange-100 text-white min-h-screen font-mono">
     <Header />
     <Hero />
     <Projects />
-    <Footer />
+    
   </div>
+  <Footer />
 </template>
 <script>
 import Header from "./components/Header.vue";
@@ -24,13 +25,5 @@ export default {
 </script>
 <style>
 @import url("https://pro.fontawesome.com/releases/v5.10.0/css/all.css");
-
-/* Additional styles */
-a:hover {
-  text-decoration: underline;
-}
-/* Add hover effect to project cards */
-.rounded-lg:hover {
-  transform: scale(1.05);
-}
+ 
 </style>
