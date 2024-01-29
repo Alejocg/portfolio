@@ -18,7 +18,7 @@
             <p class="mt-4 text-base text-black lg:mt-8 sm:text-xl"> I love experimenting with new technologies and
               turning ideas into reality through code.
               Explore my portfolio for a glimpse into my creative journey.</p>
-              <a href="https://www.linkedin.com/in/alejocg"
+              <a href="#projects"
               class="bg-white hover:bg-gray-200 text-black font-bold py-3 px-8 rounded-full inline-block font-medium text-lg mt-6">
              Projects
             </a>

@@ -4,7 +4,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex justify-between items-center py-4 md:justify-start md:space-x-10">
         <div class="lg:w-0 lg:flex-1">
-          <a href="/" class="font-bold text-gray-700 text-2xl"> My Portfolio</a>
+          <a href="#projects" class="font-bold text-gray-700 text-2xl"> My Portfolio</a>
         </div>
         <div class="-mr-2 -my-2 md:hidden">
       <button @click="toggleMenu" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-900 hover:text-black hover:bg-gray-800 focus:outline-none focus:bg-gray-800 focus:text-black transition duration-150 ease-in-out"
