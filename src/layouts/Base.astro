@@ -1,0 +1,118 @@
+---
+import "../styles/global.css";
+import { profile, projects, skills } from "../data/projects";
+
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+
+const keywords = [
+  "Alejo Cereto",
+  "product manager",
+  "portfolio",
+  "Tokyo",
+  ...projects.map((p) => p.title),
+  ...skills.slice(0, 4),
+].join(", ");
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: profile.fullName,
+  alternateName: profile.name,
+  url: profile.site,
+  image: new URL(profile.portrait, Astro.url).href,
+  jobTitle: "Product Manager",
+  description: profile.about,
+  address: { "@type": "PostalAddress", addressLocality: "Tokyo", addressCountry: "JP" },
+  sameAs: [profile.linkedin, profile.github],
+  knowsAbout: skills,
+  makesOffer: projects.map((p) => ({
+    "@type": "CreativeWork",
+    name: p.title,
+    description: p.description,
+    url: p.webLink,
+    image: new URL(p.image, Astro.url).href,
+  })),
+};
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    {/* Before first paint, so scroll-reveal targets start hidden only when
+        there is a script around to reveal them. */}
+    <script is:inline>document.documentElement.classList.add("js")</script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#08080b" />
+
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="canonical" href={Astro.url.href} />
+
+    {/* The display face is needed for the very first paint of the title card. */}
+    <link
+      rel="preload"
+      href="/fonts/CormorantGaramond-600.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link rel="preload" href="/fonts/Inter-400.woff2" as="font" type="font/woff2" crossorigin />
+
+    {/*
+      The museum is a canvas, so none of it is indexable. Everything a crawler
+      sees comes from the static portfolio in the page body plus the tags
+      below -- which is why they are worth keeping accurate.
+    */}
+    <meta name="author" content={profile.fullName} />
+    <meta name="keywords" content={keywords} />
+    <meta name="robots" content="index, follow" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Alejo Cereto" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:url" content={Astro.url.href} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={new URL(profile.ogImage, Astro.url)} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={`Portrait of ${profile.fullName}`} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={new URL(profile.ogImage, Astro.url)} />
+
+    {/* Structured data, so the projects are legible to a crawler as works
+        rather than as four unlabelled images. */}
+    <script type="application/ld+json" is:inline set:html={JSON.stringify(structuredData)} />
+  </head>
+
+  <body>
+    <slot />
+    <style is:global>
+      /*
+        Applied by the museum island while the visitor is inside it. Everywhere
+        else -- including without JavaScript or WebGL -- the portfolio is an
+        ordinary scrolling page.
+      */
+      body.museum-active {
+        overflow: hidden;
+      }
+      body.museum-active .catalogue {
+        /* Kept in the accessibility tree and the DOM for crawlers, simply
+           covered by the canvas rather than removed. */
+        visibility: hidden;
+      }
+    </style>
+  </body>
+</html>

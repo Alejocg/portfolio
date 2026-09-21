@@ -1,0 +1,427 @@
+---
+import Base from "../layouts/Base.astro";
+import Museum from "../components/Museum.tsx";
+import { imageSize, intro, profile, projects, skillGroups } from "../data/projects";
+
+const title = "Alejo Cereto — Product Manager & Builder";
+const description =
+  "Alejo Cereto is a product manager in Tokyo who builds his own products end to end: a community platform with a million visitors, an AI study tool, and two mobile apps.";
+
+const [featured, ...rest] = projects;
+const domain = (url: string) => url.replace(/^https?:\/\//, "").replace(/\/$/, "");
+const num = (i: number) => String(i + 1).padStart(2, "0");
+---
+
+<Base title={title} description={description}>
+  {/*
+    The museum is an opt-in now, offered at the foot of the page. The island
+    renders nothing until the "Enter the museum" button asks for it, and only
+    then fetches the 3D stack. client:only because the scene reaches for
+    `document` and a WebGL context, neither of which exists at build time.
+  */}
+  <Museum client:only="react" />
+
+  <div class="catalogue relative isolate overflow-x-clip">
+    {/* Ambient backdrop: faint grid, four drifting glows in the projects' own
+        accents, and a film of grain so the black is never flat. */}
+    <div aria-hidden="true" class="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[140svh]">
+      <div class="bg-grid absolute inset-0"></div>
+      <div class="aurora absolute inset-0">
+        {projects.map((p, i) => <span style={`--accent:${p.accent};--i:${i}`}></span>)}
+      </div>
+    </div>
+    <div aria-hidden="true" class="grain pointer-events-none fixed inset-0 -z-10"></div>
+
+    {/* ---------------------------------------------------------------- nav */}
+    <nav class="sticky top-0 z-20 border-b border-white/5 bg-ink-950/70 pt-[env(safe-area-inset-top)] backdrop-blur-xl">
+      <div class="mx-auto flex h-16 max-w-6xl items-center justify-between px-5 sm:px-8">
+        <a href="#top" class="font-display text-xl font-semibold tracking-wide text-paper-100">
+          Alejo Cereto
+        </a>
+        <div class="flex items-center gap-5 text-[0.7rem] uppercase tracking-[0.18em] text-paper-500 sm:gap-8">
+          <a href="#work" class="hidden transition-colors hover:text-paper-100 sm:inline">Work</a>
+          <a href="#about" class="hidden transition-colors hover:text-paper-100 sm:inline">About</a>
+          <a href="#museum" data-museum hidden class="hidden transition-colors hover:text-paper-100 sm:inline">3D Museum</a>
+          <a
+            href="#contact"
+            class="rounded-full border border-paper-700/50 px-4 py-2 text-paper-100 transition-colors hover:border-brass-400 hover:text-brass-300"
+          >
+            Contact
+          </a>
+        </div>
+      </div>
+    </nav>
+
+    <main id="top">
+      {/* --------------------------------------------------------------- hero */}
+      <header class="mx-auto flex min-h-[calc(100svh-4rem)] max-w-6xl flex-col justify-center px-5 pb-16 pt-20 sm:px-8 sm:pt-24">
+        <p data-reveal class="flex items-center gap-3 text-[0.7rem] uppercase tracking-[0.3em] text-paper-500">
+          <span class="pulse-dot"></span>
+          {intro.eyebrow}
+        </p>
+
+        <h1
+          data-reveal
+          style="--d:80ms"
+          class="mt-8 max-w-5xl text-balance font-display text-[3.4rem] font-semibold leading-[0.95] tracking-tight text-paper-100 sm:text-7xl lg:text-[6.5rem]"
+        >
+          {intro.headline[0]}<em class="shimmer font-normal">{intro.headline[1]}</em>{intro.headline[2]}
+        </h1>
+
+        <p data-reveal style="--d:160ms" class="mt-8 max-w-2xl text-base leading-relaxed text-paper-300 sm:text-lg">
+          {intro.lede}
+        </p>
+
+        <div data-reveal style="--d:240ms" class="mt-10 flex flex-wrap gap-3">
+          <a
+            href="#work"
+            class="group inline-flex items-center gap-3 rounded-full bg-paper-100 px-7 py-4 text-xs font-medium uppercase tracking-[0.18em] text-ink-950 transition-colors hover:bg-brass-300"
+          >
+            See the work
+            <span aria-hidden="true" class="transition-transform group-hover:translate-y-0.5">↓</span>
+          </a>
+          <a
+            href="#contact"
+            class="inline-flex items-center rounded-full border border-paper-700/50 px-7 py-4 text-xs uppercase tracking-[0.18em] text-paper-100 transition-colors hover:border-paper-300"
+          >
+            Get in touch
+          </a>
+        </div>
+
+        <dl data-reveal style="--d:320ms" class="mt-20 grid max-w-3xl grid-cols-3 border-t border-white/10">
+          {
+            intro.stats.map(([figure, label]) => (
+              <div class="border-white/10 pr-4 pt-6 [&:not(:first-child)]:border-l [&:not(:first-child)]:pl-4 sm:[&:not(:first-child)]:pl-8">
+                <dt class="sr-only">{label}</dt>
+                <dd class="font-display text-4xl font-semibold text-paper-100 sm:text-5xl">{figure}</dd>
+                <dd class="mt-2 text-[0.7rem] leading-snug text-paper-500 sm:text-xs">{label}</dd>
+              </div>
+            ))
+          }
+        </dl>
+      </header>
+
+      {/* --------------------------------------------------------------- work */}
+      <section id="work" aria-labelledby="work-title" class="mx-auto max-w-6xl scroll-mt-20 px-5 py-20 sm:px-8 sm:py-28">
+        <div data-reveal class="flex items-end justify-between gap-6 border-b border-white/10 pb-6">
+          <h2 id="work-title" class="font-display text-4xl font-semibold text-paper-100 sm:text-6xl">
+            Selected work
+          </h2>
+          <p class="text-[0.7rem] uppercase tracking-[0.25em] text-paper-500">
+            01 — {num(projects.length - 1)}
+          </p>
+        </div>
+
+        {/* Featured: the first project in projects.ts gets the full-width treatment. */}
+        <article
+          data-reveal
+          style={`--accent:${featured.accent}`}
+          class="project-card featured relative mt-14 overflow-hidden rounded-3xl border border-white/10 p-6 sm:p-10 lg:p-14"
+        >
+          <div class="grid items-center gap-10 lg:grid-cols-[1fr_1.25fr] lg:gap-14">
+            <div>
+              <p class="flex items-center gap-3 text-[0.65rem] uppercase tracking-[0.25em]">
+                <span class="text-accent">Featured · {num(0)}</span>
+                <span class="h-px w-8 bg-white/20"></span>
+                <span class="text-paper-500">{featured.status}</span>
+              </p>
+              <h3 class="mt-5 font-display text-5xl font-semibold leading-none text-paper-100 sm:text-7xl">
+                {featured.title}
+              </h3>
+              <p class="mt-6 text-lg leading-relaxed text-paper-100/90">{featured.description}</p>
+              <p class="mt-4 text-sm leading-relaxed text-paper-500">{featured.note}</p>
+
+              <dl class="mt-8 grid grid-cols-3 gap-4 border-t border-white/10 pt-6">
+                {
+                  featured.highlights.map(([figure, label]) => (
+                    <div>
+                      <dt class="sr-only">{label}</dt>
+                      <dd class="font-display text-3xl font-semibold text-accent sm:text-4xl">{figure}</dd>
+                      <dd class="mt-1 text-[0.7rem] leading-snug text-paper-500">{label}</dd>
+                    </div>
+                  ))
+                }
+              </dl>
+
+              <div class="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3">
+                <a
+                  href={featured.webLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="accent-button inline-flex items-center gap-2 rounded-full px-6 py-3 text-xs font-medium uppercase tracking-[0.18em]"
+                >
+                  Visit {domain(featured.webLink)} <span aria-hidden="true">↗</span>
+                </a>
+                <p class="text-xs text-paper-500">{featured.medium}</p>
+              </div>
+            </div>
+
+            <a href={featured.webLink} target="_blank" rel="noopener noreferrer" class="browser block" tabindex="-1" aria-hidden="true">
+              <div class="browser-bar">
+                <span></span><span></span><span></span>
+                <em>{domain(featured.webLink)}</em>
+              </div>
+              <img
+                src={featured.image}
+                alt=""
+                loading="eager"
+                decoding="async"
+                width={imageSize(featured)[0]}
+                height={imageSize(featured)[1]}
+                class="block h-auto w-full"
+              />
+            </a>
+          </div>
+        </article>
+
+        {/* The rest, alternating sides. */}
+        <div class="mt-10 grid gap-10">
+          {
+            rest.map((project, i) => (
+              <article
+                data-reveal
+                style={`--accent:${project.accent}`}
+                class="project-card relative overflow-hidden rounded-3xl border border-white/10 p-6 sm:p-10"
+              >
+                <div class="grid items-center gap-10 lg:grid-cols-2 lg:gap-14">
+                  <a
+                    href={project.webLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    tabindex="-1"
+                    aria-hidden="true"
+                    class:list={["browser block", i % 2 === 1 && "lg:order-2"]}
+                  >
+                    <div class="browser-bar">
+                      <span /><span /><span />
+                      <em>{domain(project.webLink)}</em>
+                    </div>
+                    <img
+                      src={project.image}
+                      alt=""
+                      loading="lazy"
+                      decoding="async"
+                      width={imageSize(project)[0]}
+                      height={imageSize(project)[1]}
+                      class="block h-auto w-full"
+                    />
+                  </a>
+
+                  <div>
+                    <p class="flex items-center gap-3 text-[0.65rem] uppercase tracking-[0.25em]">
+                      <span class="text-accent">{num(i + 1)}</span>
+                      <span class="h-px w-8 bg-white/20" />
+                      <span class="text-paper-500">{project.status}</span>
+                    </p>
+                    <h3 class="mt-4 font-display text-4xl font-semibold leading-none text-paper-100 sm:text-5xl">
+                      {project.title}
+                    </h3>
+                    <p class="mt-5 text-base leading-relaxed text-paper-100/90">{project.description}</p>
+                    <p class="mt-3 text-sm leading-relaxed text-paper-500">{project.note}</p>
+
+                    <ul class="mt-6 flex flex-wrap gap-2">
+                      {project.highlights.map(([figure, label]) => (
+                        <li class="rounded-full border border-white/10 bg-white/[0.03] px-3 py-1.5 text-xs text-paper-300">
+                          <span class="text-accent">{figure}</span> · {label}
+                        </li>
+                      ))}
+                    </ul>
+
+                    <div class="mt-7 flex flex-wrap items-center gap-x-6 gap-y-3 text-xs uppercase tracking-[0.18em]">
+                      <a
+                        href={project.webLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="link-arrow text-paper-100"
+                      >
+                        {domain(project.webLink)} <span aria-hidden="true">↗</span>
+                      </a>
+                      {project.githubLink && (
+                        <a
+                          href={project.githubLink}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          class="link-arrow text-paper-500"
+                        >
+                          Source <span aria-hidden="true">↗</span>
+                        </a>
+                      )}
+                      <span class="normal-case tracking-normal text-paper-700">{project.medium}</span>
+                    </div>
+                  </div>
+                </div>
+              </article>
+            ))
+          }
+        </div>
+      </section>
+
+      {/* -------------------------------------------------------------- about */}
+      <section id="about" aria-labelledby="about-title" class="mx-auto max-w-6xl scroll-mt-20 px-5 py-20 sm:px-8 sm:py-28">
+        <div class="grid gap-12 lg:grid-cols-[1fr_1.2fr] lg:gap-20">
+          <div data-reveal>
+            <p class="text-[0.7rem] uppercase tracking-[0.3em] text-paper-500">About</p>
+            <h2 id="about-title" class="mt-5 text-balance font-display text-4xl font-semibold leading-tight text-paper-100 sm:text-6xl">
+              Product thinking, <em class="font-normal text-brass-300">engineering hands.</em>
+            </h2>
+          </div>
+          <div data-reveal style="--d:120ms">
+            <p class="text-lg leading-relaxed text-paper-300">{profile.about}</p>
+            <p class="mt-5 text-base leading-relaxed text-paper-500">{profile.blurb}</p>
+
+            <div class="mt-12 grid gap-8 sm:grid-cols-3">
+              {
+                skillGroups.map((group) => (
+                  <div>
+                    <h3 class="border-b border-white/10 pb-3 text-[0.7rem] uppercase tracking-[0.25em] text-brass-300">
+                      {group.title}
+                    </h3>
+                    <ul class="mt-4 grid gap-2.5 text-sm text-paper-300">
+                      {group.items.map((item) => <li>{item}</li>)}
+                    </ul>
+                  </div>
+                ))
+              }
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ------------------------------------------------------------ contact */}
+      <section id="contact" aria-labelledby="contact-title" class="mx-auto max-w-6xl scroll-mt-20 px-5 py-20 sm:px-8 sm:py-28">
+        <div data-reveal class="relative overflow-hidden rounded-3xl border border-white/10 px-6 py-16 text-center sm:px-12 sm:py-24">
+          <div aria-hidden="true" class="contact-glow absolute inset-0 -z-10"></div>
+          <p class="text-[0.7rem] uppercase tracking-[0.3em] text-paper-500">Contact</p>
+          <h2 id="contact-title" class="mx-auto mt-6 max-w-3xl text-balance font-display text-5xl font-semibold leading-none text-paper-100 sm:text-7xl">
+            Have something worth building?
+          </h2>
+          <p class="mx-auto mt-6 max-w-md text-sm leading-relaxed text-paper-500 sm:text-base">
+            The best way to reach me is a message on LinkedIn.
+          </p>
+          <div class="mt-10 flex flex-wrap justify-center gap-3 text-xs uppercase tracking-[0.18em]">
+            <a
+              href={profile.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="rounded-full bg-brass-400 px-7 py-3.5 font-medium text-ink-950 transition-colors hover:bg-brass-300"
+            >
+              Message me on LinkedIn ↗
+            </a>
+            <a
+              href={profile.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="rounded-full border border-paper-700/50 px-6 py-3 text-paper-100 transition-colors hover:border-paper-300"
+            >
+              GitHub ↗
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* ------------------------------------------------------------- museum
+          Hidden in the shipped HTML and revealed by the script below once it
+          has confirmed there is a 3D context to show it for. An invitation to a
+          museum the browser cannot render would be the one thing on the page
+          that does nothing when pressed. */}
+      <section id="museum" data-museum hidden aria-labelledby="museum-title" class="mx-auto max-w-6xl scroll-mt-20 px-5 pb-20 sm:px-8 sm:pb-28">
+        <div data-reveal class="museum-card relative overflow-hidden rounded-3xl border border-brass-500/25">
+          <div aria-hidden="true" class="hall">
+            <div class="hall-back"></div>
+            <div class="hall-wall hall-left">
+              {projects.slice(0, 2).map((p) => <img src={p.image} alt="" loading="lazy" style={`--accent:${p.accent}`} />)}
+            </div>
+            <div class="hall-wall hall-right">
+              {projects.slice(2, 4).map((p) => <img src={p.image} alt="" loading="lazy" style={`--accent:${p.accent}`} />)}
+            </div>
+            <div class="hall-floor"></div>
+            <div class="hall-light"></div>
+          </div>
+
+          <div class="relative px-6 pb-12 pt-4 text-center sm:px-12 sm:pb-16">
+            <p class="text-[0.7rem] uppercase tracking-[0.3em] text-brass-400">One more thing</p>
+            <h2 id="museum-title" class="mx-auto mt-5 max-w-2xl text-balance font-display text-4xl font-semibold leading-tight text-paper-100 sm:text-6xl">
+              Prefer to wander? Walk the work in 3D.
+            </h2>
+            <p class="mx-auto mt-5 max-w-xl text-sm leading-relaxed text-paper-500 sm:text-base">
+              The same {projects.length} projects, hung in a first-person museum built with
+              React Three Fiber. Walk up to a piece and press E to read about it.
+            </p>
+            <button
+              type="button"
+              id="enter-museum"
+              class="control mt-9 inline-flex items-center gap-3 rounded-full bg-brass-400 px-8 py-4 text-xs font-medium uppercase tracking-[0.2em] text-ink-950 transition-colors hover:bg-brass-300"
+            >
+              Enter the museum <span aria-hidden="true">→</span>
+            </button>
+            <p class="mt-5 text-[0.65rem] uppercase tracking-[0.2em] text-paper-700">
+              WASD + mouse · touch supported · loads on demand
+            </p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="mx-auto flex max-w-6xl flex-col gap-4 border-t border-white/10 px-5 pb-[max(2.5rem,env(safe-area-inset-bottom))] pt-8 text-xs text-paper-700 sm:flex-row sm:items-center sm:justify-between sm:px-8">
+      <p>© {new Date().getFullYear()} {profile.fullName} · {profile.location}</p>
+      <p>Built with Astro, React Three Fiber and Tailwind.</p>
+    </footer>
+  </div>
+</Base>
+
+<script>
+  // --- museum invitation -------------------------------------------------
+  // The button is static HTML; the museum is a React island. Events are the
+  // seam between them, one set each way.
+  const museumBits = document.querySelectorAll<HTMLElement>("[data-museum]");
+  const button = document.getElementById("enter-museum");
+
+  // The same question the island asks itself in Museum.tsx, asked here too,
+  // because this section is in the document long before the island is.
+  let canRender = false;
+  try {
+    const probe = document.createElement("canvas");
+    canRender = !!(probe.getContext("webgl2") ?? probe.getContext("webgl"));
+  } catch {
+    canRender = false;
+  }
+
+  museumBits.forEach((el) => (el.hidden = !canRender));
+
+  if (button) {
+    button.addEventListener("click", () => {
+      window.dispatchEvent(new CustomEvent("museum:enter"));
+    });
+    // A head start on the 3D chunk for someone already reaching for the door.
+    const prefetch = () => window.dispatchEvent(new CustomEvent("museum:prefetch"));
+    button.addEventListener("pointerenter", prefetch, { once: true });
+    button.addEventListener("focus", prefetch, { once: true });
+    button.addEventListener("touchstart", prefetch, { once: true, passive: true });
+  }
+
+  // Sent when a context is granted and then taken away again, which is what
+  // a phone does after the tab has been in the background for a while.
+  window.addEventListener("museum:unavailable", () => {
+    museumBits.forEach((el) => (el.hidden = true));
+  });
+
+  // --- scroll reveal -------------------------------------------------------
+  // Elements start hidden only under `html.js` (set inline in the head), so a
+  // page without JavaScript never has anything to reveal.
+  const targets = document.querySelectorAll("[data-reveal]");
+  if ("IntersectionObserver" in window) {
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
+          entry.target.classList.add("is-in");
+          io.unobserve(entry.target);
+        }
+      },
+      { rootMargin: "0px 0px -8% 0px", threshold: 0.08 },
+    );
+    targets.forEach((el) => io.observe(el));
+  } else {
+    targets.forEach((el) => el.classList.add("is-in"));
+  }
+</script>

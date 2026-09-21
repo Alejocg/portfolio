@@ -1,29 +1,36 @@
 {
-  "name": "my-vue-app",
-  "private": true,
-  "version": "0.0.0",
+  "name": "alejo-portfolio",
   "type": "module",
+  "version": "1.0.0",
+  "private": true,
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "images": "node scripts/optimize-images.mjs"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-free": "^6.4.0",
-    "@fortawesome/free-brands-svg-icons": "^6.4.0",
-    "@fortawesome/free-regular-svg-icons": "^6.4.0",
-    "@fortawesome/free-solid-svg-icons": "^6.4.0",
-    "@fortawesome/vue-fontawesome": "^3.0.3",
-    "font-awesome": "^4.7.0",
-    "vue": "^3.2.45",
-    "vue-sweetalert2": "^5.0.5",
-    "vue3-simple-alert": "^1.0.4"
+    "@astrojs/react": "6.0.5",
+    "@astrojs/sitemap": "^3.7.4",
+    "@react-three/drei": "10.7.8",
+    "@react-three/fiber": "9.7.0",
+    "@react-three/postprocessing": "3.1.1",
+    "astro": "7.3.2",
+    "postprocessing": "6.39.5",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
+    "three": "0.185.1",
+    "zustand": "5.0.15"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^4.0.0",
-    "autoprefixer": "^10.4.13",
-    "postcss": "^8.4.21",
-    "tailwindcss": "^3.2.7",
-    "vite": "^4.1.0"
+    "@astrojs/check": "^0.9.10",
+    "@tailwindcss/vite": "4.3.3",
+    "@types/react": "19.2.7",
+    "@types/react-dom": "19.2.7",
+    "@types/three": "0.185.4",
+    "tailwindcss": "4.3.3",
+    "typescript": "5.9.3",
+    "sharp": "^0.35.4"
   }
 }
