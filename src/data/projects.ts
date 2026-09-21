@@ -140,7 +140,7 @@ export const profile = {
   blurb:
     "By day I shape products; the rest of the time I build my own. This is a collection of the ones that made it out — mobile apps, an AI study tool, and a community that grew far past what I planned for.",
   about:
-    "Product Manager with nine years of shipping consumer and B2B products, currently building 0-to-1 AI products at Rakuten's incubator in Tokyo. Everything in this room, though, I built myself — nights and weekends, front to back.",
+    "Product manager and builder based in Tokyo. Everything in this room I built myself — nights and weekends, front to back.",
   portrait: "/projects/portrait.webp",
   /** Fixed-size social card; see scripts/optimize-images.mjs. */
   ogImage: "/og.jpg",
