@@ -154,7 +154,6 @@ export const intro = {
   eyebrow: "Product Manager & Builder · Tokyo",
   /** Split so the middle phrase can be set in italics. */
   headline: ["I shape products by day and ", "build my own", " by night."] as const,
-  lede: "Nine years shipping consumer and B2B products — today building 0-to-1 AI products at Rakuten's incubator in Tokyo. Outside of work I design, build and run my own products end to end, from the first commit to the growth loop.",
   stats: [
     ["9", "years in product"],
     ["1M+", "visitors to a solo-built platform"],

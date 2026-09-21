@@ -68,11 +68,7 @@ const num = (i: number) => String(i + 1).padStart(2, "0");
           {intro.headline[0]}<em class="shimmer font-normal">{intro.headline[1]}</em>{intro.headline[2]}
         </h1>
 
-        <p data-reveal style="--d:160ms" class="mt-8 max-w-2xl text-base leading-relaxed text-paper-300 sm:text-lg">
-          {intro.lede}
-        </p>
-
-        <div data-reveal style="--d:240ms" class="mt-10 flex flex-wrap gap-3">
+        <div data-reveal style="--d:160ms" class="mt-12 flex flex-wrap gap-3">
           <a
             href="#work"
             class="group inline-flex items-center gap-3 rounded-full bg-paper-100 px-7 py-4 text-xs font-medium uppercase tracking-[0.18em] text-ink-950 transition-colors hover:bg-brass-300"
@@ -88,7 +84,7 @@ const num = (i: number) => String(i + 1).padStart(2, "0");
           </a>
         </div>
 
-        <dl data-reveal style="--d:320ms" class="mt-20 grid max-w-3xl grid-cols-3 border-t border-white/10">
+        <dl data-reveal style="--d:240ms" class="mt-20 grid max-w-3xl grid-cols-3 border-t border-white/10">
           {
             intro.stats.map(([figure, label]) => (
               <div class="border-white/10 pr-4 pt-6 [&:not(:first-child)]:border-l [&:not(:first-child)]:pl-4 sm:[&:not(:first-child)]:pl-8">
@@ -266,8 +262,7 @@ const num = (i: number) => String(i + 1).padStart(2, "0");
             </h2>
           </div>
           <div data-reveal style="--d:120ms">
-            <p class="text-lg leading-relaxed text-paper-300">{profile.about}</p>
-            <p class="mt-5 text-base leading-relaxed text-paper-500">{profile.blurb}</p>
+            <p class="text-lg leading-relaxed text-paper-300">{profile.blurb}</p>
 
             <div class="mt-12 grid gap-8 sm:grid-cols-3">
               {
